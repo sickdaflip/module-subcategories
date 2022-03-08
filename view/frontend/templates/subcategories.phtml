@@ -1,0 +1,25 @@
+<?php
+$current_category_id = $block->getCurrentCategoryId();
+$categoryObj = $this->categoryRepository->get($current_category_id);
+$subcategories = $categoryObj->getChildrenCategories();
+?>
+<div class="section__content row">
+<?php foreach($subcategories as $subcat) { ?>
+    <a href="<?= $subcat->getUrl(); ?>"
+       class="banner col-xs-6 col-lg-3 margin-bottom-l"
+       aria-label="<?= $subcat->getName(); ?>">
+        <img src="<?= $this->getImageUrl($subcat->getId()); ?>" alt="<?= $subcat->getName(); ?>" />
+        <div class="banner__content">
+            <p class="banner__text">
+                <?= $subcat->getName(); ?>
+            </p>
+            <span class="banner__icon">
+                <svg class="icon arrow-right__icon" role="presentation" focusable="false">
+                    <title>Arrow right icon</title>
+                    <use href="<?= $block->escapeUrl($block->getViewFileUrl("images/icons-sprite.svg#arrow-right")) ?>"></use>
+                </svg>
+            </span>
+        </div>
+    </a>
+<?php } ?>
+</div>
